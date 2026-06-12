@@ -1,7 +1,756 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="refresh" content="0;url=https://google.co.in">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Haripriya B V — Full-Stack & Flutter Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #16161f;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.14);
+    --text: #f0f0f5;
+    --muted: #8888a0;
+    --accent: #a78bfa;
+    --accent2: #f472b6;
+    --accent3: #38bdf8;
+    --green: #34d399;
+    --font: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 60px;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    letter-spacing: 0.02em; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 80px 5% 60px;
+    position: relative;
+  }
+  .hero-grid {
+    max-width: 900px; width: 100%;
+    display: grid; gap: 12px;
+  }
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+  .name-accent { color: var(--accent); }
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--muted);
+    max-width: 540px;
+    margin-top: 4px;
+  }
+  .hero-sub strong { color: var(--text); font-weight: 500; }
+  .hero-ctas {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-top: 16px;
+  }
+  .btn {
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: all 0.2s;
+    cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0f;
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover { background: #c4b5fd; border-color: #c4b5fd; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border2);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-stat-row {
+    display: flex; gap: 32px; flex-wrap: wrap;
+    margin-top: 40px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .stat { display: flex; flex-direction: column; gap: 2px; }
+  .stat-num {
+    font-size: 1.8rem; font-weight: 700;
+    color: var(--text);
+    font-family: var(--mono);
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 12px; color: var(--muted); }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 5%; max-width: 100%; }
+  .inner { max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .about-text p strong { color: var(--text); font-weight: 500; }
+  .about-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 8px;
+  }
+  .pill {
+    padding: 5px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-family: var(--mono);
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+  .pill:hover { border-color: var(--accent); color: var(--accent); }
+  .info-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+  .info-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .info-item:last-child { border-bottom: none; }
+  .info-icon {
+    font-size: 16px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+  .info-key { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .info-val { font-size: 14px; color: var(--text); margin-top: 2px; }
+  .info-val a { color: var(--accent); text-decoration: none; }
+  .info-val a:hover { text-decoration: underline; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--bg2); }
+  .skill-groups {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .skill-group {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .skill-group:hover { border-color: var(--border2); }
+  .skill-group-title {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .skill-group-title::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: var(--border);
+  }
+  .skill-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .skill-tag {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: var(--mono);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  /* ── EXPERIENCE ── */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .tl-left { }
+  .tl-period {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .tl-company {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .tl-role {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 10px;
+  }
+  .tl-bullets {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .tl-bullets li {
+    font-size: 14px;
+    color: var(--muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .tl-bullets li::before {
+    content: '▸';
+    position: absolute; left: 0;
+    color: var(--accent);
+    font-size: 10px;
+    top: 4px;
+  }
+  .tl-bullets strong { color: var(--text); font-weight: 500; }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--bg2); }
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .project-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    transition: border-color 0.25s, transform 0.25s;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .project-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .project-icon {
+    width: 40px; height: 40px;
+    border-radius: 8px;
+    background: rgba(167,139,250,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .project-name {
+    font-size: 16px; font-weight: 600; color: var(--text);
+  }
+  .project-desc {
+    font-size: 13px; color: var(--muted); line-height: 1.7; flex: 1;
+  }
+  .project-stack {
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .stack-tag {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--mono);
+    background: rgba(167,139,250,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(167,139,250,0.2);
+  }
+
+  /* ── CERTS ── */
+  .cert-list {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .cert-item {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    transition: border-color 0.2s;
+  }
+  .cert-item:hover { border-color: var(--border2); }
+  .cert-icon {
+    font-size: 22px; flex-shrink: 0;
+  }
+  .cert-name { font-size: 14px; font-weight: 500; color: var(--text); }
+  .cert-issuer { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* ── CONTACT ── */
+  #contact {
+    background: var(--bg2);
+    text-align: center;
+  }
+  .contact-desc {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 480px;
+    margin: -24px auto 32px;
+    line-height: 1.7;
+  }
+  .contact-links {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: center;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 28px 5%;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* ── GLOW BG ── */
+  .glow {
+    position: absolute; border-radius: 50%;
+    pointer-events: none; filter: blur(100px); opacity: 0.12;
+  }
+  .glow-1 { width: 600px; height: 600px; background: #a78bfa; top: -200px; right: -200px; }
+  .glow-2 { width: 400px; height: 400px; background: #38bdf8; bottom: 0; left: -100px; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.6s ease both; }
+  .delay-1 { animation-delay: 0.1s; }
+  .delay-2 { animation-delay: 0.2s; }
+  .delay-3 { animation-delay: 0.3s; }
+  .delay-4 { animation-delay: 0.4s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+    .nav-links { display: none; }
+    h1 { font-size: 2.5rem; }
+  }
+</style>
 </head>
-<body></body>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">haripriya.dev</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  <div class="hero-grid">
+    <div class="hero-tag fade-up">Available for opportunities</div>
+    <h1 class="fade-up delay-1">
+      Haripriya<br/><span class="name-accent">B V</span>
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      <strong>Full-Stack &amp; Flutter Developer</strong> — building scalable web and mobile products from API to UI. Based in Thiruvananthapuram, Kerala.
+    </p>
+    <div class="hero-ctas fade-up delay-3">
+      <a href="mailto:haripriyabv2002@gmail.com" class="btn btn-primary">✉ Get in touch</a>
+      <a href="https://github.com/Harries123" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+      <a href="https://linkedin.com/in/haripriya-b-v-3b6b10285" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+    </div>
+    <div class="hero-stat-row fade-up delay-4">
+      <div class="stat">
+        <span class="stat-num">3<span>+</span></span>
+        <span class="stat-label">Years learning</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3<span>+</span></span>
+        <span class="stat-label">Companies</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">3<span>+</span></span>
+        <span class="stat-label">Live projects</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2<span>+</span></span>
+        <span class="stat-label">Certifications</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="inner">
+    <div class="section-label">01 / About</div>
+    <h2 class="section-title">Who I am</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>Full-Stack and Flutter Developer</strong> who loves building things end-to-end — from crafting clean REST APIs and wiring up databases, to shipping polished, responsive UIs that real users interact with.</p>
+        <p>I graduated with a <strong>B.Tech in Computer Science</strong> from College of Engineering Attingal in 2024, and since then I've been working across MERN, Next.js, and Flutter ecosystems — picking up Docker, GitHub Actions, and CI/CD along the way.</p>
+        <p>Currently building <strong>POS billing software</strong> at Mobicom using Flutter and PHP, with MySQL powering the backend.</p>
+        <div class="about-pills">
+          <span class="pill">Flutter</span>
+          <span class="pill">React</span>
+          <span class="pill">Next.js</span>
+          <span class="pill">Node.js</span>
+          <span class="pill">MongoDB</span>
+          <span class="pill">MySQL</span>
+          <span class="pill">Docker</span>
+          <span class="pill">CI/CD</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-item">
+          <div class="info-icon">📍</div>
+          <div>
+            <div class="info-key">Location</div>
+            <div class="info-val">Thiruvananthapuram, Kerala</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🎓</div>
+          <div>
+            <div class="info-key">Education</div>
+            <div class="info-val">B.Tech CSE — College of Engineering Attingal</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">💼</div>
+          <div>
+            <div class="info-key">Current role</div>
+            <div class="info-val">Junior Flutter Developer @ Mobicom</div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📧</div>
+          <div>
+            <div class="info-key">Email</div>
+            <div class="info-val"><a href="mailto:haripriyabv2002@gmail.com">haripriyabv2002@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📞</div>
+          <div>
+            <div class="info-key">Phone</div>
+            <div class="info-val">+91 96452 30834</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="inner">
+    <div class="section-label">02 / Skills</div>
+    <h2 class="section-title">Tech stack</h2>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <div class="skill-group-title">Languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">HTML5</span>
+          <span class="skill-tag">CSS3</span>
+          <span class="skill-tag">Dart</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Frontend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">React.js</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">Flutter</span>
+          <span class="skill-tag">Sass</span>
+          <span class="skill-tag">WordPress</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Backend</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">Express.js</span>
+          <span class="skill-tag">PHP</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">JWT Auth</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Database</div>
+        <div class="skill-tags">
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">SQLyog</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">DevOps & Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">CI/CD</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">Postman</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">AWS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="inner">
+    <div class="section-label">03 / Experience</div>
+    <h2 class="section-title">Where I've worked</h2>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="tl-left">
+          <div class="tl-period">2026 — Present</div>
+          <div class="tl-company">Mobicom</div>
+        </div>
+        <div>
+          <div class="tl-role">Junior Flutter Developer</div>
+          <ul class="tl-bullets">
+            <li>Building <strong>POS billing applications</strong> with Flutter and PHP backend</li>
+            <li>Integrating <strong>MySQL &amp; SQLyog</strong> for inventory and sales management</li>
+            <li>Implementing <strong>invoice generation</strong> and real-time order tracking</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-left">
+          <div class="tl-period">Jun – Dec 2025</div>
+          <div class="tl-company">Animations Media</div>
+        </div>
+        <div>
+          <div class="tl-role">Full-Stack Developer</div>
+          <ul class="tl-bullets">
+            <li>Developed <strong>Edpodia</strong> — an educational platform — using Next.js and Node.js</li>
+            <li>Built REST APIs, admin dashboards, and <strong>payment integrations</strong></li>
+            <li>Configured <strong>Docker</strong> and GitHub Actions CI/CD pipelines</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-left">
+          <div class="tl-period">Nov 2024 – Feb 2025</div>
+          <div class="tl-company">TrackGenesis</div>
+        </div>
+        <div>
+          <div class="tl-role">Web Developer Intern</div>
+          <ul class="tl-bullets">
+            <li>Developed responsive <strong>MERN stack</strong> applications</li>
+            <li>Built REST APIs and optimized backend performance</li>
+            <li>Collaborated using Git and GitHub workflows</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-left">
+          <div class="tl-period">May – Oct 2024</div>
+          <div class="tl-company">ICT Academy of Kerala</div>
+        </div>
+        <div>
+          <div class="tl-role">MERN Stack Development Trainee</div>
+          <ul class="tl-bullets">
+            <li>Completed intensive <strong>MERN stack</strong> training program</li>
+            <li>Built full-stack web applications with <strong>JWT authentication</strong></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="inner">
+    <div class="section-label">04 / Projects</div>
+    <h2 class="section-title">Things I've built</h2>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-icon">🎙️</div>
+        <div class="project-name">Edpodia</div>
+        <p class="project-desc">Scalable educational podcast platform with quiz engine, admin dashboard, and payment integrations. Built the full Next.js frontend and React admin panel.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">MongoDB</span>
+          <span class="stack-tag">Docker</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🧾</div>
+        <div class="project-name">POS Billing App</div>
+        <p class="project-desc">Full-featured point-of-sale billing system with inventory management, transaction tracking, and invoice generation. Live in production at Mobicom.</p>
+        <div class="project-stack">
+          <span class="stack-tag">Flutter</span>
+          <span class="stack-tag">PHP</span>
+          <span class="stack-tag">MySQL</span>
+          <span class="stack-tag">SQLyog</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-icon">🛍️</div>
+        <div class="project-name">Shoztop</div>
+        <p class="project-desc">E-commerce platform with admin panels, REST APIs for order management, and optimized MongoDB query performance for high-throughput product listings.</p>
+        <div class="project-stack">
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">Express</span>
+          <span class="stack-tag">MongoDB</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certifications">
+  <div class="inner">
+    <div class="section-label">05 / Certifications</div>
+    <h2 class="section-title">Credentials</h2>
+    <div class="cert-list">
+      <div class="cert-item">
+        <div class="cert-icon">🏅</div>
+        <div>
+          <div class="cert-name">MERN Stack Full-Stack Development Certification</div>
+          <div class="cert-issuer">ICT Academy of Kerala · 2024</div>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-icon">🏅</div>
+        <div>
+          <div class="cert-name">Web Development Internship Completion</div>
+          <div class="cert-issuer">TrackGenesis · 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="inner">
+    <div class="section-label">06 / Contact</div>
+    <h2 class="section-title">Let's work together</h2>
+    <p class="contact-desc">Open to full-time roles, freelance projects, and collaborations. Drop me a message — I usually respond within a day.</p>
+    <div class="contact-links">
+      <a href="mailto:haripriyabv2002@gmail.com" class="btn btn-primary">✉ haripriyabv2002@gmail.com</a>
+      <a href="https://linkedin.com/in/haripriya-b-v-3b6b10285" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+      <a href="https://github.com/Harries123" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  Designed &amp; built by Haripriya B V · 2026
+</footer>
+
+</body>
 </html>
